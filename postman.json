@@ -1,0 +1,237 @@
+{
+    "info": {
+      "name": "API Rest Sequelize",
+      "_postman_id": "12345-67890",
+      "description": "Collection for API routes of the rest API with Sequelize",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Home Routes",
+        "item": [
+          {
+            "name": "GET /",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "http://localhost:3000/",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": [""]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Student Routes",
+        "item": [
+          {
+            "name": "GET /students",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "http://localhost:3000/students",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": ["students"]
+              }
+            }
+          },
+          {
+            "name": "POST /students",
+            "request": {
+              "method": "POST",
+              "url": {
+                "raw": "http://localhost:3000/students",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": ["students"]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"john@example.com\",\"age\":\"25\",\"weight\":\"70\",\"height\":\"175\"}"
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ]
+            }
+          },
+          {
+            "name": "PUT /students/:id",
+            "request": {
+              "method": "PUT",
+              "url": {
+                "raw": "http://localhost:3000/students/:id",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": ["students", ":id"]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\"name\":\"Updated Name\",\"lastname\":\"Updated Lastname\"}"
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ]
+            }
+          },
+          {
+            "name": "GET /students/:id",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "http://localhost:3000/students/:id",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": ["students", ":id"]
+              }
+            }
+          },
+          {
+            "name": "DELETE /students/:id",
+            "request": {
+              "method": "DELETE",
+              "url": {
+                "raw": "http://localhost:3000/students/:id",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": ["students", ":id"]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Token Routes",
+        "item": [
+          {
+            "name": "POST /token",
+            "request": {
+              "method": "POST",
+              "url": {
+                "raw": "http://localhost:3000/token",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": ["token"]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\"username\":\"user\",\"password\":\"password\"}"
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "User Routes",
+        "item": [
+          {
+            "name": "GET /users",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "http://localhost:3000/users",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": ["users"]
+              }
+            }
+          },
+          {
+            "name": "GET /users/:id",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "http://localhost:3000/users/:id",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": ["users", ":id"]
+              }
+            }
+          },
+          {
+            "name": "POST /users",
+            "request": {
+              "method": "POST",
+              "url": {
+                "raw": "http://localhost:3000/users",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": ["users"]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\"name\":\"Jane\",\"lastname\":\"Doe\",\"email\":\"jane@example.com\",\"age\":\"30\"}"
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ]
+            }
+          },
+          {
+            "name": "PUT /users",
+            "request": {
+              "method": "PUT",
+              "url": {
+                "raw": "http://localhost:3000/users",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": ["users"]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\"name\":\"Updated User\",\"email\":\"updated@example.com\"}"
+              },
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ]
+            }
+          },
+          {
+            "name": "DELETE /users",
+            "request": {
+              "method": "DELETE",
+              "url": {
+                "raw": "http://localhost:3000/users",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "3000",
+                "path": ["users"]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+  
