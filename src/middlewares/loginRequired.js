@@ -32,7 +32,7 @@ export default async (req, res, next) => {
     req.userId = id;
     req.userEmail = email;
     return next();
-  } catch (e) {
+  } catch {
     return res.status(401).json({
       errors: ['Expired or invalid token.'],
     });

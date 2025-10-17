@@ -1,0 +1,18 @@
+{
+  "testEnvironment": "node",
+  "testMatch": [
+    "**/__tests__/**/*.js",
+    "**/?(*.)+(spec|test).js"
+  ],
+  "setupFilesAfterEnv": ["<rootDir>/__tests__/setup.js"],
+  "transform": {
+    "^.+\\.js$": "babel-jest"
+  },
+  "collectCoverageFrom": [
+    "src/**/*.js",
+    "!src/database/migrations/**",
+    "!src/database/seeds/**",
+    "!src/config/appConfig.js",
+    "!src/server.js"
+  ]
+}

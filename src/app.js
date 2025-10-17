@@ -1,7 +1,5 @@
 import { resolve } from 'path';
-
-import './database';
-
+import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -26,11 +24,21 @@ const corsOptions = {
   },
 };
 
+dotenv.config();
+
+// Import database after dotenv config
+import './database';
+
 class App {
   constructor() {
     this.app = express();
-    this.middlewares();
-    this.routes();
+    try {
+      this.middlewares();
+      this.routes();
+      console.log('✅ App initialized successfully');
+    } catch (error) {
+      console.error('❌ Error initializing app:', error);
+    }
   }
 
   middlewares() {

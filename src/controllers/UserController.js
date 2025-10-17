@@ -18,7 +18,7 @@ class UserController {
     try {
       const users = await User.findAll({ attributes: ['id', 'name', 'email'] });
       return res.json(users);
-    } catch (e) {
+    } catch {
       return res.json(null);
     }
   }
@@ -30,7 +30,7 @@ class UserController {
 
       const { id, name, email } = user;
       return res.json({ id, name, email });
-    } catch (e) {
+    } catch {
       return res.json(null);
     }
   }

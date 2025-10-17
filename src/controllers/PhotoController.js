@@ -3,10 +3,10 @@ import multerConfig from '../config/multerConfig';
 
 import Photo from '../models/Photo';
 
-const upload = multer(multerConfig).single('photo');
-
 class PhotoController {
   store(req, res) {
+    const upload = multer(multerConfig).single('photo');
+
     return upload(req, res, async (error) => {
       if (error) {
         return res.status(400).json({
@@ -20,7 +20,7 @@ class PhotoController {
         const photo = await Photo.create({ originalname, filename, student_id });
 
         return res.json(photo);
-      } catch (e) {
+      } catch {
         return res.status(400).json({
           errors: ['Student does not exist'],
         });
@@ -29,4 +29,4 @@ class PhotoController {
   }
 }
 
-export default new PhotoController();
+export default PhotoController;
