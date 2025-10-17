@@ -2,13 +2,10 @@ import PhotoController from '../../../src/controllers/PhotoController';
 import Photo from '../../../src/models/Photo';
 import multer from 'multer';
 
-// Mock models
 jest.mock('../../../src/models/Photo');
 
-// Mock multer
 jest.mock('multer');
 
-// Mock multerConfig
 jest.mock('../../../src/config/multerConfig', () => ({
   storage: {},
   limits: { fileSize: 2 * 1024 * 1024 },
@@ -28,7 +25,6 @@ describe('PhotoController', () => {
       json: jest.fn().mockReturnThis(),
     };
 
-    // Clear all mocks
     jest.clearAllMocks();
   });
 
@@ -51,10 +47,8 @@ describe('PhotoController', () => {
 
       Photo.create.mockResolvedValue(mockPhoto);
 
-      // Mock multer middleware
       const mockSingle = jest.fn((fieldName) => {
         return jest.fn((req, res, callback) => {
-          // Simulate successful upload
           callback(null);
         });
       });
@@ -77,7 +71,6 @@ describe('PhotoController', () => {
       const uploadError = new Error('File too large');
       uploadError.code = 'LIMIT_FILE_SIZE';
 
-      // Mock multer middleware to simulate error
       const mockSingle = jest.fn((fieldName) => {
         return jest.fn((req, res, callback) => {
           callback(uploadError);
@@ -103,11 +96,10 @@ describe('PhotoController', () => {
       };
       
       req.file = mockFile;
-      req.body = { student_id: '999' }; // Non-existent student
+      req.body = { student_id: '999' };
 
       Photo.create.mockRejectedValue(new Error('Database constraint violation'));
 
-      // Mock multer middleware for successful upload
       const mockSingle = jest.fn((fieldName) => {
         return jest.fn((req, res, callback) => {
           callback(null);
@@ -132,10 +124,9 @@ describe('PhotoController', () => {
     });
 
     it('should handle missing file case', async () => {
-      req.file = null; // No file uploaded
+      req.file = null;
       req.body = { student_id: '1' };
 
-      // Mock multer middleware for successful processing but no file
       const mockSingle = jest.fn((fieldName) => {
         return jest.fn((req, res, callback) => {
           callback(null);
@@ -146,7 +137,6 @@ describe('PhotoController', () => {
         single: mockSingle,
       });
 
-      // This will cause an error when trying to destructure req.file
       await controller.store(req, res);
 
       expect(res.status).toHaveBeenCalledWith(400);

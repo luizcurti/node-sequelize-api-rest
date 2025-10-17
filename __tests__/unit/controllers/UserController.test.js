@@ -1,7 +1,6 @@
 import UserController from '../../../src/controllers/UserController';
 import User from '../../../src/models/User';
 
-// Mock the User model
 jest.mock('../../../src/models/User');
 
 describe('UserController', () => {
@@ -25,7 +24,6 @@ describe('UserController', () => {
       destroy: jest.fn(),
     };
     
-    // Clear all mocks before each test
     jest.clearAllMocks();
   });
 
@@ -58,9 +56,9 @@ describe('UserController', () => {
 
     it('should handle validation errors', async () => {
       const userData = {
-        name: 'Jo', // Too short
+        name: 'Jo', 
         email: 'invalid-email',
-        password: '123', // Too short
+        password: '123',
       };
       req.body = userData;
 

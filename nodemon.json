@@ -1,5 +1,24 @@
 {
-  "execMap" : {
+  "execMap": {
     "js": "node -r sucrase/register"
-  }
+  },
+  "watch": [
+    "src/"
+  ],
+  "ignore": [
+    "__tests__/",
+    "coverage/",
+    "node_modules/",
+    "dist/",
+    "uploads/",
+    "db/",
+    "*.test.js"
+  ],
+  "ext": "js,json",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "restartable": "rs",
+  "verbose": false,
+  "delay": "1000"
 }

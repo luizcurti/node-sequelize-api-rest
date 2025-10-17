@@ -26,7 +26,6 @@ const corsOptions = {
 
 dotenv.config();
 
-// Import database after dotenv config
 import './database';
 
 class App {

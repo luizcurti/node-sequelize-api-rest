@@ -10,12 +10,9 @@ describe('Student Model', () => {
       models: {},
     };
     mockModels = {
-      Photo: {
-        hasMany: jest.fn(),
-      },
+      Photo: {},
     };
 
-    // Clear all mocks before each test
     jest.clearAllMocks();
   });
 

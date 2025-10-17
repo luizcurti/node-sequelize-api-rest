@@ -1,12 +1,9 @@
 import dotenv from 'dotenv';
 
-// Load environment variables
 dotenv.config();
 
-// Set test timeout
 jest.setTimeout(10000);
 
-// Mock console methods to reduce noise in tests
 global.console = {
   ...console,
   log: jest.fn(),
@@ -16,7 +13,6 @@ global.console = {
   error: jest.fn(),
 };
 
-// Add global test helpers
 global.mockRequest = (overrides = {}) => ({
   body: {},
   params: {},
@@ -36,7 +32,6 @@ global.mockResponse = () => {
 
 global.mockNext = () => jest.fn();
 
-// Simple test to avoid "no tests" error
 describe('Setup', () => {
   it('should load environment variables', () => {
     expect(process.env).toBeDefined();

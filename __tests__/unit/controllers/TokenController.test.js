@@ -2,7 +2,6 @@ import TokenController from '../../../src/controllers/TokenController';
 import User from '../../../src/models/User';
 import jwt from 'jsonwebtoken';
 
-// Mock dependencies
 jest.mock('../../../src/models/User');
 jest.mock('jsonwebtoken');
 
@@ -23,7 +22,6 @@ describe('TokenController', () => {
       passwordIsValid: jest.fn(),
     };
 
-    // Clear all mocks before each test
     jest.clearAllMocks();
   });
 

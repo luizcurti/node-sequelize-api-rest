@@ -2,7 +2,6 @@ import StudentController from '../../../src/controllers/StudentController';
 import Student from '../../../src/models/Student';
 import Photo from '../../../src/models/Photo';
 
-// Mock the models
 jest.mock('../../../src/models/Student');
 jest.mock('../../../src/models/Photo');
 
@@ -31,7 +30,6 @@ describe('StudentController', () => {
       destroy: jest.fn(),
     };
 
-    // Clear all mocks before each test
     jest.clearAllMocks();
   });
 
@@ -103,9 +101,9 @@ describe('StudentController', () => {
 
     it('should handle validation errors', async () => {
       const studentData = {
-        name: 'Jo', // Too short
+        name: 'Jo',
         email: 'invalid-email',
-        age: -1, // Invalid age
+        age: -1, 
       };
       req.body = studentData;
 

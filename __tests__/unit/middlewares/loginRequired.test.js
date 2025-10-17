@@ -2,7 +2,6 @@ import loginRequired from '../../../src/middlewares/loginRequired';
 import User from '../../../src/models/User';
 import jwt from 'jsonwebtoken';
 
-// Mock dependencies
 jest.mock('../../../src/models/User');
 jest.mock('jsonwebtoken');
 
@@ -24,7 +23,6 @@ describe('loginRequired middleware', () => {
       name: 'Test User',
     };
 
-    // Clear all mocks before each test
     jest.clearAllMocks();
   });
 

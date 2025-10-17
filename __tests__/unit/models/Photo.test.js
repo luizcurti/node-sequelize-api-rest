@@ -15,7 +15,6 @@ describe('Photo Model', () => {
       },
     };
 
-    // Clear all mocks before each test
     jest.clearAllMocks();
   });
 
@@ -73,7 +72,6 @@ describe('Photo Model', () => {
       expect(attributes.url).toHaveProperty('get');
       expect(typeof attributes.url.get).toBe('function');
 
-      // Test the getter function directly
       const mockThis = {
         getDataValue: jest.fn((key) => {
           if (key === 'filename') return 'test-photo.jpg';

@@ -38,13 +38,11 @@ describe('Multer Configuration', () => {
     const mockReq = {};
     const mockFile = { originalname: 'test.jpg' };
 
-    // Access the filename function through storage
     const storage = multerConfig.storage;
     if (storage && storage.getFilename) {
       storage.getFilename(mockReq, mockFile, mockCb);
       expect(mockCb).toHaveBeenCalled();
     } else {
-      // Test passes if storage is properly configured
       expect(storage).toBeDefined();
     }
   });
@@ -56,13 +54,12 @@ describe('Multer Configuration', () => {
 
     const expectedPath = resolve(__dirname, '..', '..', 'uploads', 'images');
 
-    // Access the destination function through storage
     const storage = multerConfig.storage;
     if (storage && storage.getDestination) {
       storage.getDestination(mockReq, mockFile, mockCb);
       expect(mockCb).toHaveBeenCalledWith(null, expectedPath);
     } else {
-      // Test passes if storage is properly configured
+
       expect(storage).toBeDefined();
     }
   });
@@ -71,7 +68,6 @@ describe('Multer Configuration', () => {
     const originalEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = 'production';
 
-    // Re-import to get new config
     jest.resetModules();
     const prodConfig = require('../../../src/config/multerConfig').default;
 
