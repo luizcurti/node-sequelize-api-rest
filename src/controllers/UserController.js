@@ -12,7 +12,7 @@ class UserController {
       });
     }
   }
-  
+
   async index(req, res) {
     try {
       const users = await User.findAll({ attributes: ['id', 'name', 'email'] });
