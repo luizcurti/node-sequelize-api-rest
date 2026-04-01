@@ -1,5 +1,5 @@
+import 'dotenv/config';
 import { resolve } from 'path';
-import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -23,8 +23,6 @@ const corsOptions = {
     }
   },
 };
-
-dotenv.config();
 
 import './database';
 

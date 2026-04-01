@@ -21,7 +21,7 @@ class StudentController {
       return res.json(student);
     } catch (e) {
       return res.status(400).json({
-        errors: e.errors.map((err) => err.message),
+        errors: e.errors ? e.errors.map((err) => err.message) : [e.message],
       });
     }
   }
@@ -32,13 +32,12 @@ class StudentController {
 
       if (!id) {
         return res.status(400).json({
-          errors: ['Faltando ID'],
+          errors: ['Missing ID'],
         });
       }
 
       const student = await Student.findByPk(id, {
         attributes: ['id', 'name', 'lastname', 'email', 'age', 'weight', 'height'],
-        order: [['id', 'DESC'], [Photo, 'id', 'DESC']],
         include: {
           model: Photo,
           attributes: ['url', 'filename'],
@@ -46,15 +45,15 @@ class StudentController {
       });
 
       if (!student) {
-        return res.status(400).json({
-          errors: ['Student não existe'],
+        return res.status(404).json({
+          errors: ['Student does not exist'],
         });
       }
 
       return res.json(student);
     } catch (e) {
       return res.status(400).json({
-        errors: e.errors.map((err) => err.message),
+        errors: e.errors ? e.errors.map((err) => err.message) : [e.message],
       });
     }
   }
@@ -65,25 +64,25 @@ class StudentController {
 
       if (!id) {
         return res.status(400).json({
-          errors: ['Faltando ID'],
+          errors: ['Missing ID'],
         });
       }
 
       const student = await Student.findByPk(id);
 
       if (!student) {
-        return res.status(400).json({
-          errors: ['Student não existe'],
+        return res.status(404).json({
+          errors: ['Student does not exist'],
         });
       }
 
       await student.destroy();
       return res.json({
-        apagado: true,
+        deleted: true,
       });
     } catch (e) {
       return res.status(400).json({
-        errors: e.errors.map((err) => err.message),
+        errors: e.errors ? e.errors.map((err) => err.message) : [e.message],
       });
     }
   }
@@ -94,23 +93,23 @@ class StudentController {
 
       if (!id) {
         return res.status(400).json({
-          errors: ['Faltando ID'],
+          errors: ['Missing ID'],
         });
       }
 
       const student = await Student.findByPk(id);
 
       if (!student) {
-        return res.status(400).json({
-          errors: ['Student não existe'],
+        return res.status(404).json({
+          errors: ['Student does not exist'],
         });
       }
 
-      const studentAtualizado = await student.update(req.body);
-      return res.json(studentAtualizado);
+      const updatedStudent = await student.update(req.body);
+      return res.json(updatedStudent);
     } catch (e) {
       return res.status(400).json({
-        errors: e.errors.map((err) => err.message),
+        errors: e.errors ? e.errors.map((err) => err.message) : [e.message],
       });
     }
   }

@@ -138,7 +138,7 @@ describe('StudentController', () => {
 
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({
-        errors: ['Faltando ID'],
+        errors: ['Missing ID'],
       });
     });
 
@@ -157,7 +157,6 @@ describe('StudentController', () => {
 
       expect(Student.findByPk).toHaveBeenCalledWith(studentId, {
         attributes: ['id', 'name', 'lastname', 'email', 'age', 'weight', 'height'],
-        order: [['id', 'DESC'], [Photo, 'id', 'DESC']],
         include: {
           model: Photo,
           attributes: ['url', 'filename'],
@@ -174,9 +173,9 @@ describe('StudentController', () => {
 
       await StudentController.show(req, res);
 
-      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({
-        errors: ['Student não existe'],
+        errors: ['Student does not exist'],
       });
     });
 
@@ -210,7 +209,7 @@ describe('StudentController', () => {
 
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({
-        errors: ['Faltando ID'],
+        errors: ['Missing ID'],
       });
     });
 
@@ -240,9 +239,9 @@ describe('StudentController', () => {
 
       await StudentController.update(req, res);
 
-      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({
-        errors: ['Student não existe'],
+        errors: ['Student does not exist'],
       });
     });
 
@@ -278,7 +277,7 @@ describe('StudentController', () => {
 
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({
-        errors: ['Faltando ID'],
+        errors: ['Missing ID'],
       });
     });
 
@@ -293,7 +292,7 @@ describe('StudentController', () => {
 
       expect(Student.findByPk).toHaveBeenCalledWith(studentId);
       expect(mockStudent.destroy).toHaveBeenCalled();
-      expect(res.json).toHaveBeenCalledWith({ apagado: true });
+      expect(res.json).toHaveBeenCalledWith({ deleted: true });
     });
 
     it('should return error if student not found', async () => {
@@ -304,9 +303,9 @@ describe('StudentController', () => {
 
       await StudentController.delete(req, res);
 
-      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({
-        errors: ['Student não existe'],
+        errors: ['Student does not exist'],
       });
     });
 

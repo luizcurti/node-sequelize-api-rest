@@ -1,7 +1,6 @@
 import multer from 'multer';
 import { extname, resolve } from 'path';
-
-const aleatorio = () => Math.floor(Math.random() * 10000 + 10000);
+import { randomBytes } from 'crypto';
 
 export default {
   fileFilter: (req, file, cb) => {
@@ -20,7 +19,7 @@ export default {
       cb(null, basePath);
     },
     filename: (req, file, cb) => {
-      cb(null, `${Date.now()}_${aleatorio()}${extname(file.originalname)}`);
+      cb(null, `${Date.now()}_${randomBytes(8).toString('hex')}${extname(file.originalname)}`);
     },
   }),
 };

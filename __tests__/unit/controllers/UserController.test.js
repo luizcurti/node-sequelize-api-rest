@@ -103,13 +103,16 @@ describe('UserController', () => {
       expect(res.json).toHaveBeenCalledWith(users);
     });
 
-    it('should handle errors and return null', async () => {
+    it('should handle errors and return 500', async () => {
       User.findAll.mockRejectedValue(new Error('Database error'));
 
       await UserController.index(req, res);
 
       expect(User.findAll).toHaveBeenCalled();
-      expect(res.json).toHaveBeenCalledWith(null);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        errors: ['Database error'],
+      });
     });
   });
 
@@ -130,16 +133,19 @@ describe('UserController', () => {
       });
     });
 
-    it('should handle errors and return null', async () => {
+    it('should return 404 when user not found', async () => {
       const userId = '999';
       req.params.id = userId;
 
-      User.findByPk.mockRejectedValue(new Error('User not found'));
+      User.findByPk.mockResolvedValue(null);
 
       await UserController.show(req, res);
 
       expect(User.findByPk).toHaveBeenCalledWith(userId);
-      expect(res.json).toHaveBeenCalledWith(null);
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({
+        errors: ['User does not exist'],
+      });
     });
   });
 
@@ -176,7 +182,7 @@ describe('UserController', () => {
       await UserController.update(req, res);
 
       expect(User.findByPk).toHaveBeenCalledWith(req.userId);
-      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({
         errors: ['User does not exist'],
       });
@@ -213,7 +219,7 @@ describe('UserController', () => {
 
       expect(User.findByPk).toHaveBeenCalledWith(req.userId);
       expect(mockUser.destroy).toHaveBeenCalled();
-      expect(res.json).toHaveBeenCalledWith(null);
+      expect(res.json).toHaveBeenCalledWith({ deleted: true });
     });
 
     it('should return error if user does not exist', async () => {
@@ -222,7 +228,7 @@ describe('UserController', () => {
       await UserController.delete(req, res);
 
       expect(User.findByPk).toHaveBeenCalledWith(req.userId);
-      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({
         errors: ['User does not exist'],
       });

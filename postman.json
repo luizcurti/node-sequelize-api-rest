@@ -53,7 +53,7 @@
               },
               "body": {
                 "mode": "raw",
-                "raw": "{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"john@example.com\",\"age\":\"25\",\"weight\":\"70\",\"height\":\"175\"}"
+                "raw": "{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"john@example.com\",\"age\":25,\"weight\":70.0,\"height\":175.0}"
               },
               "header": [
                 {
@@ -122,15 +122,15 @@
             "request": {
               "method": "POST",
               "url": {
-                "raw": "http://localhost:3000/token",
+                "raw": "http://localhost:3000/tokens/",
                 "protocol": "http",
                 "host": ["localhost"],
                 "port": "3000",
-                "path": ["token"]
+                "path": ["tokens", ""]
               },
               "body": {
                 "mode": "raw",
-                "raw": "{\"username\":\"user\",\"password\":\"password\"}"
+                "raw": "{\"email\":\"user@example.com\",\"password\":\"password123\"}"
               },
               "header": [
                 {
@@ -150,11 +150,11 @@
             "request": {
               "method": "GET",
               "url": {
-                "raw": "http://localhost:3000/users",
+                "raw": "http://localhost:3000/user/",
                 "protocol": "http",
                 "host": ["localhost"],
                 "port": "3000",
-                "path": ["users"]
+                "path": ["user", ""]
               }
             }
           },
@@ -163,11 +163,11 @@
             "request": {
               "method": "GET",
               "url": {
-                "raw": "http://localhost:3000/users/:id",
+                "raw": "http://localhost:3000/user/:id",
                 "protocol": "http",
                 "host": ["localhost"],
                 "port": "3000",
-                "path": ["users", ":id"]
+                "path": ["user", ":id"]
               }
             }
           },
@@ -176,15 +176,15 @@
             "request": {
               "method": "POST",
               "url": {
-                "raw": "http://localhost:3000/users",
+                "raw": "http://localhost:3000/user/",
                 "protocol": "http",
                 "host": ["localhost"],
                 "port": "3000",
-                "path": ["users"]
+                "path": ["user", ""]
               },
               "body": {
                 "mode": "raw",
-                "raw": "{\"name\":\"Jane\",\"lastname\":\"Doe\",\"email\":\"jane@example.com\",\"age\":\"30\"}"
+                "raw": "{\"name\":\"Jane Doe\",\"email\":\"jane@example.com\",\"password\":\"password123\"}"
               },
               "header": [
                 {
@@ -199,11 +199,11 @@
             "request": {
               "method": "PUT",
               "url": {
-                "raw": "http://localhost:3000/users",
+                "raw": "http://localhost:3000/user/",
                 "protocol": "http",
                 "host": ["localhost"],
                 "port": "3000",
-                "path": ["users"]
+                "path": ["user", ""]
               },
               "body": {
                 "mode": "raw",
@@ -222,11 +222,11 @@
             "request": {
               "method": "DELETE",
               "url": {
-                "raw": "http://localhost:3000/users",
+                "raw": "http://localhost:3000/user/",
                 "protocol": "http",
                 "host": ["localhost"],
                 "port": "3000",
-                "path": ["users"]
+                "path": ["user", ""]
               }
             }
           }

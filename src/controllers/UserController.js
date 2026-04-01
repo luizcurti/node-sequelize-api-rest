@@ -3,8 +3,8 @@ import User from '../models/User';
 class UserController {
   async store(req, res) {
     try {
-      const novoUser = await User.create(req.body);
-      const { id, name, email } = novoUser;
+      const newUser = await User.create(req.body);
+      const { id, name, email } = newUser;
       return res.json({ id, name, email });
     } catch (e) {
       return res.status(400).json({
@@ -17,8 +17,10 @@ class UserController {
     try {
       const users = await User.findAll({ attributes: ['id', 'name', 'email'] });
       return res.json(users);
-    } catch {
-      return res.json(null);
+    } catch (e) {
+      return res.status(500).json({
+        errors: [e.message || 'Internal server error'],
+      });
     }
   }
 
@@ -26,10 +28,18 @@ class UserController {
     try {
       const user = await User.findByPk(req.params.id);
 
+      if (!user) {
+        return res.status(404).json({
+          errors: ['User does not exist'],
+        });
+      }
+
       const { id, name, email } = user;
       return res.json({ id, name, email });
-    } catch {
-      return res.json(null);
+    } catch (e) {
+      return res.status(400).json({
+        errors: e.errors ? e.errors.map((err) => err.message) : [e.message],
+      });
     }
   }
 
@@ -38,17 +48,17 @@ class UserController {
       const user = await User.findByPk(req.userId);
 
       if (!user) {
-        return res.status(400).json({
+        return res.status(404).json({
           errors: ['User does not exist'],
         });
       }
 
-      const novosDados = await user.update(req.body);
-      const { id, name, email } = novosDados;
+      const updatedData = await user.update(req.body);
+      const { id, name, email } = updatedData;
       return res.json({ id, name, email });
     } catch (e) {
       return res.status(400).json({
-        errors: e.errors.map((err) => err.message),
+        errors: e.errors ? e.errors.map((err) => err.message) : [e.message],
       });
     }
   }
@@ -58,16 +68,16 @@ class UserController {
       const user = await User.findByPk(req.userId);
 
       if (!user) {
-        return res.status(400).json({
+        return res.status(404).json({
           errors: ['User does not exist'],
         });
       }
 
       await user.destroy();
-      return res.json(null);
+      return res.json({ deleted: true });
     } catch (e) {
       return res.status(400).json({
-        errors: e.errors.map((err) => err.message),
+        errors: e.errors ? e.errors.map((err) => err.message) : [e.message],
       });
     }
   }

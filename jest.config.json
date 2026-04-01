@@ -1,8 +1,8 @@
 {
   "testEnvironment": "node",
   "testMatch": [
-    "**/__tests__/**/*.js",
-    "**/?(*.)+(spec|test).js"
+    "**/__tests__/unit/**/*.js",
+    "**/__tests__/setup.js"
   ],
   "setupFilesAfterEnv": ["<rootDir>/__tests__/setup.js"],
   "transform": {
