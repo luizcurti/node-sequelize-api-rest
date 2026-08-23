@@ -1,0 +1,37 @@
+sequenceDiagram
+    participant C as Client
+    participant M as loginRequired middleware
+    participant PC as PhotoController
+    participant Multer as multer (disk storage)
+    participant PS as PhotoService
+    participant SR as StudentRepository
+    participant PR as PhotoRepository
+    participant DB as MySQL
+
+    C->>M: POST /photos/ (multipart, Bearer token)
+    M->>PC: next() [authenticated]
+    PC->>Multer: run upload (single 'photo')
+
+    alt file missing or wrong mime type
+        Multer-->>PC: no req.file / ValidationAppError
+        PC-->>C: 400 { errors: [...] }
+    else file accepted
+        Multer-->>PC: req.file saved to disk
+        PC->>PS: createPhoto(studentId, file)
+        PS->>SR: findById(studentId)
+        SR->>DB: SELECT * FROM students WHERE id = ?
+        DB-->>SR: student row (or null)
+        SR-->>PS: Student | null
+
+        alt student does not exist
+            PS-->>PC: throws ValidationAppError('Student does not exist')
+            PC-->>C: 400 { errors: [...] }
+        else student exists
+            PS->>PR: create({ originalname, filename, student_id })
+            PR->>DB: INSERT INTO photos (...)
+            DB-->>PR: photo row
+            PR-->>PS: Photo
+            PS-->>PC: Photo
+            PC-->>C: 200 photo (with virtual `url`)
+        end
+    end

@@ -1,237 +1,869 @@
 {
-    "info": {
-      "name": "API Rest Sequelize",
-      "_postman_id": "12345-67890",
-      "description": "Collection for API routes of the rest API with Sequelize",
-      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
-      {
-        "name": "Home Routes",
-        "item": [
-          {
-            "name": "GET /",
-            "request": {
-              "method": "GET",
-              "url": {
-                "raw": "http://localhost:3000/",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": [""]
-              }
-            }
-          }
-        ]
-      },
-      {
-        "name": "Student Routes",
-        "item": [
-          {
-            "name": "GET /students",
-            "request": {
-              "method": "GET",
-              "url": {
-                "raw": "http://localhost:3000/students",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": ["students"]
-              }
-            }
-          },
-          {
-            "name": "POST /students",
-            "request": {
-              "method": "POST",
-              "url": {
-                "raw": "http://localhost:3000/students",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": ["students"]
-              },
-              "body": {
-                "mode": "raw",
-                "raw": "{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"john@example.com\",\"age\":25,\"weight\":70.0,\"height\":175.0}"
-              },
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ]
-            }
-          },
-          {
-            "name": "PUT /students/:id",
-            "request": {
-              "method": "PUT",
-              "url": {
-                "raw": "http://localhost:3000/students/:id",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": ["students", ":id"]
-              },
-              "body": {
-                "mode": "raw",
-                "raw": "{\"name\":\"Updated Name\",\"lastname\":\"Updated Lastname\"}"
-              },
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ]
-            }
-          },
-          {
-            "name": "GET /students/:id",
-            "request": {
-              "method": "GET",
-              "url": {
-                "raw": "http://localhost:3000/students/:id",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": ["students", ":id"]
-              }
-            }
-          },
-          {
-            "name": "DELETE /students/:id",
-            "request": {
-              "method": "DELETE",
-              "url": {
-                "raw": "http://localhost:3000/students/:id",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": ["students", ":id"]
-              }
-            }
-          }
-        ]
-      },
-      {
-        "name": "Token Routes",
-        "item": [
-          {
-            "name": "POST /token",
-            "request": {
-              "method": "POST",
-              "url": {
-                "raw": "http://localhost:3000/tokens/",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": ["tokens", ""]
-              },
-              "body": {
-                "mode": "raw",
-                "raw": "{\"email\":\"user@example.com\",\"password\":\"password123\"}"
-              },
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "name": "User Routes",
-        "item": [
-          {
-            "name": "GET /users",
-            "request": {
-              "method": "GET",
-              "url": {
-                "raw": "http://localhost:3000/user/",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": ["user", ""]
-              }
-            }
-          },
-          {
-            "name": "GET /users/:id",
-            "request": {
-              "method": "GET",
-              "url": {
-                "raw": "http://localhost:3000/user/:id",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": ["user", ":id"]
-              }
-            }
-          },
-          {
-            "name": "POST /users",
-            "request": {
-              "method": "POST",
-              "url": {
-                "raw": "http://localhost:3000/user/",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": ["user", ""]
-              },
-              "body": {
-                "mode": "raw",
-                "raw": "{\"name\":\"Jane Doe\",\"email\":\"jane@example.com\",\"password\":\"password123\"}"
-              },
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ]
-            }
-          },
-          {
-            "name": "PUT /users",
-            "request": {
-              "method": "PUT",
-              "url": {
-                "raw": "http://localhost:3000/user/",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": ["user", ""]
-              },
-              "body": {
-                "mode": "raw",
-                "raw": "{\"name\":\"Updated User\",\"email\":\"updated@example.com\"}"
-              },
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ]
-            }
-          },
-          {
-            "name": "DELETE /users",
-            "request": {
-              "method": "DELETE",
-              "url": {
-                "raw": "http://localhost:3000/user/",
-                "protocol": "http",
-                "host": ["localhost"],
-                "port": "3000",
-                "path": ["user", ""]
-              }
-            }
-          }
+  "info": {
+    "name": "API Rest Sequelize",
+    "_postman_id": "12345-67890",
+    "description": "Collection for all routes of the REST API (Users, Students, Photos, Tokens). Requests are ordered so the collection can be run top-to-bottom (e.g. via Newman) with no manual setup: each request chains state through collection variables (userId, token, studentId, ...) and covers both the happy path and the corresponding sad paths (validation errors, missing auth, not found).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000", "type": "string" },
+    { "key": "userEmail", "value": "", "type": "string" },
+    { "key": "userPassword", "value": "", "type": "string" },
+    { "key": "userId", "value": "", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "studentEmail", "value": "", "type": "string" },
+    { "key": "studentId", "value": "", "type": "string" }
+  ],
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('Response time is reasonable', () => {",
+          "  pm.expect(pm.response.responseTime).to.be.below(5000);",
+          "});"
         ]
       }
-    ]
-  }
-  
+    }
+  ],
+  "item": [
+    {
+      "name": "Home",
+      "item": [
+        {
+          "name": "GET / - welcome message (happy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Body is the index message', () => {",
+                  "  pm.expect(pm.response.json()).to.eql('Index');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/", "host": ["{{baseUrl}}"], "path": [""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "POST /user - create user (happy)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const suffix = `${Date.now()}_${Math.floor(Math.random() * 100000)}`;",
+                  "pm.collectionVariables.set('userEmail', `postman_user_${suffix}@example.com`);",
+                  "pm.collectionVariables.set('userPassword', 'password123');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "const json = pm.response.json();",
+                  "pm.test('Response has id, name and email', () => {",
+                  "  pm.expect(json).to.have.property('id');",
+                  "  pm.expect(json).to.have.property('name', 'Postman E2E User');",
+                  "  pm.expect(json).to.have.property('email', pm.collectionVariables.get('userEmail'));",
+                  "});",
+                  "pm.test('Response does not leak the password hash', () => {",
+                  "  pm.expect(json).to.not.have.property('password_hash');",
+                  "});",
+                  "pm.collectionVariables.set('userId', json.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/user/", "host": ["{{baseUrl}}"], "path": ["user", ""] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Postman E2E User\",\"email\":\"{{userEmail}}\",\"password\":\"{{userPassword}}\"}"
+            }
+          }
+        },
+        {
+          "name": "POST /user - duplicate email (sad, 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has validation errors', () => {",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json).to.have.property('errors').that.is.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/user/", "host": ["{{baseUrl}}"], "path": ["user", ""] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Duplicate Email User\",\"email\":\"{{userEmail}}\",\"password\":\"password123\"}"
+            }
+          }
+        },
+        {
+          "name": "POST /user - invalid data (sad, 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has validation errors', () => {",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json).to.have.property('errors').that.is.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/user/", "host": ["{{baseUrl}}"], "path": ["user", ""] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"ab\",\"email\":\"not-an-email\",\"password\":\"123\"}"
+            }
+          }
+        },
+        {
+          "name": "GET /user - list users (happy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response is an array', () => {",
+                  "  pm.expect(pm.response.json()).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/user/", "host": ["{{baseUrl}}"], "path": ["user", ""] }
+          }
+        },
+        {
+          "name": "GET /user/:id - get user by id (happy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Returns the created user', () => {",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(String(json.id)).to.eql(pm.collectionVariables.get('userId'));",
+                  "  pm.expect(json.email).to.eql(pm.collectionVariables.get('userEmail'));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/user/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["user", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "GET /user/:id - not found (sad, 404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Response has an error message', () => {",
+                  "  pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/user/999999999",
+              "host": ["{{baseUrl}}"],
+              "path": ["user", "999999999"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tokens (Auth)",
+      "item": [
+        {
+          "name": "POST /tokens - login (happy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "const json = pm.response.json();",
+                  "pm.test('Response has a token and the user', () => {",
+                  "  pm.expect(json).to.have.property('token').that.is.a('string').that.is.not.empty;",
+                  "  pm.expect(json.user).to.have.property('email', pm.collectionVariables.get('userEmail'));",
+                  "});",
+                  "pm.collectionVariables.set('token', json.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/tokens/", "host": ["{{baseUrl}}"], "path": ["tokens", ""] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"{{userEmail}}\",\"password\":\"{{userPassword}}\"}"
+            }
+          }
+        },
+        {
+          "name": "POST /tokens - wrong password (sad, 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Response has an error message', () => {",
+                  "  pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/tokens/", "host": ["{{baseUrl}}"], "path": ["tokens", ""] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"{{userEmail}}\",\"password\":\"wrong-password\"}"
+            }
+          }
+        },
+        {
+          "name": "POST /tokens - unknown email (sad, 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Response has an error message', () => {",
+                  "  pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/tokens/", "host": ["{{baseUrl}}"], "path": ["tokens", ""] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"does-not-exist@example.com\",\"password\":\"password123\"}"
+            }
+          }
+        },
+        {
+          "name": "POST /tokens - missing credentials (sad, 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Response has an error message', () => {",
+                  "  pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/tokens/", "host": ["{{baseUrl}}"], "path": ["tokens", ""] },
+            "body": { "mode": "raw", "raw": "{}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users - protected",
+      "item": [
+        {
+          "name": "PUT /user - update without token (sad, 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/user/", "host": ["{{baseUrl}}"], "path": ["user", ""] },
+            "body": { "mode": "raw", "raw": "{\"name\":\"Should Not Update\"}" }
+          }
+        },
+        {
+          "name": "PUT /user - update own profile (happy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Name was updated', () => {",
+                  "  pm.expect(pm.response.json()).to.have.property('name', 'Postman E2E User Updated');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/user/", "host": ["{{baseUrl}}"], "path": ["user", ""] },
+            "body": { "mode": "raw", "raw": "{\"name\":\"Postman E2E User Updated\"}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "POST /students - create without token (sad, 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/students/", "host": ["{{baseUrl}}"], "path": ["students", ""] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"john@example.com\",\"age\":25,\"weight\":70.0,\"height\":175.0}"
+            }
+          }
+        },
+        {
+          "name": "POST /students - invalid data (sad, 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has validation errors', () => {",
+                  "  pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/students/", "host": ["{{baseUrl}}"], "path": ["students", ""] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"ab\",\"lastname\":\"cd\",\"email\":\"not-an-email\",\"age\":25,\"weight\":70.0,\"height\":175.0}"
+            }
+          }
+        },
+        {
+          "name": "POST /students - create student (happy)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const suffix = `${Date.now()}_${Math.floor(Math.random() * 100000)}`;",
+                  "pm.collectionVariables.set('studentEmail', `postman_student_${suffix}@example.com`);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "const json = pm.response.json();",
+                  "pm.test('Response has the created student', () => {",
+                  "  pm.expect(json).to.have.property('id');",
+                  "  pm.expect(json).to.have.property('email', pm.collectionVariables.get('studentEmail'));",
+                  "});",
+                  "pm.collectionVariables.set('studentId', json.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/students/", "host": ["{{baseUrl}}"], "path": ["students", ""] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Jane\",\"lastname\":\"Smith\",\"email\":\"{{studentEmail}}\",\"age\":22,\"weight\":65.5,\"height\":170.0}"
+            }
+          }
+        },
+        {
+          "name": "GET /students - list students (happy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response is an array', () => {",
+                  "  pm.expect(pm.response.json()).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/students/", "host": ["{{baseUrl}}"], "path": ["students", ""] }
+          }
+        },
+        {
+          "name": "GET /students/:id - get student by id (happy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Returns the created student with its Photos', () => {",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(String(json.id)).to.eql(pm.collectionVariables.get('studentId'));",
+                  "  pm.expect(json).to.have.property('Photos').that.is.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "{{studentId}}"]
+            }
+          }
+        },
+        {
+          "name": "GET /students/:id - not found (sad, 404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/students/999999999",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "999999999"]
+            }
+          }
+        },
+        {
+          "name": "PUT /students/:id - update without token (sad, 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "{{studentId}}"]
+            },
+            "body": { "mode": "raw", "raw": "{\"name\":\"Should Not Update\"}" }
+          }
+        },
+        {
+          "name": "PUT /students/:id - update student (happy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Name was updated', () => {",
+                  "  pm.expect(pm.response.json()).to.have.property('name', 'Jane Updated');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "{{studentId}}"]
+            },
+            "body": { "mode": "raw", "raw": "{\"name\":\"Jane Updated\"}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Photos",
+      "item": [
+        {
+          "name": "POST /photos - upload without token (sad, 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/photos/", "host": ["{{baseUrl}}"], "path": ["photos", ""] },
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "student_id", "value": "{{studentId}}", "type": "text" }]
+            }
+          }
+        },
+        {
+          "name": "POST /photos - missing file (sad, 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has validation errors', () => {",
+                  "  pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/photos/", "host": ["{{baseUrl}}"], "path": ["photos", ""] },
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "student_id", "value": "{{studentId}}", "type": "text" }]
+            }
+          }
+        },
+        {
+          "name": "POST /photos - unknown student (sad, 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has validation errors', () => {",
+                  "  pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/photos/", "host": ["{{baseUrl}}"], "path": ["photos", ""] },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "student_id", "value": "999999999", "type": "text" },
+                { "key": "photo", "type": "file", "src": "__tests__/fixtures/test.png" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /photos - upload photo (happy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "const json = pm.response.json();",
+                  "pm.test('Response has the created photo', () => {",
+                  "  pm.expect(json).to.have.property('id');",
+                  "  pm.expect(String(json.student_id)).to.eql(pm.collectionVariables.get('studentId'));",
+                  "  pm.expect(json).to.have.property('url').that.is.a('string');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/photos/", "host": ["{{baseUrl}}"], "path": ["photos", ""] },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "student_id", "value": "{{studentId}}", "type": "text" },
+                { "key": "photo", "type": "file", "src": "__tests__/fixtures/test.png" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cleanup",
+      "item": [
+        {
+          "name": "DELETE /students/:id - delete without token (sad, 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "{{studentId}}"]
+            }
+          }
+        },
+        {
+          "name": "DELETE /students/:id - delete student (happy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response confirms deletion', () => {",
+                  "  pm.expect(pm.response.json()).to.eql({ deleted: true });",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "{{studentId}}"]
+            }
+          }
+        },
+        {
+          "name": "DELETE /students/:id - already deleted (sad, 404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "{{studentId}}"]
+            }
+          }
+        },
+        {
+          "name": "DELETE /user - delete without token (sad, 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/user/", "host": ["{{baseUrl}}"], "path": ["user", ""] }
+          }
+        },
+        {
+          "name": "DELETE /user - delete own account (happy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response confirms deletion', () => {",
+                  "  pm.expect(pm.response.json()).to.eql({ deleted: true });",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/user/", "host": ["{{baseUrl}}"], "path": ["user", ""] }
+          }
+        },
+        {
+          "name": "DELETE /user - stale token after account deletion (sad, 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Token is rejected because the user no longer exists', () => {",
+                  "  pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/user/", "host": ["{{baseUrl}}"], "path": ["user", ""] }
+          }
+        }
+      ]
+    }
+  ]
+}

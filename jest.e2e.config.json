@@ -1,14 +1,16 @@
 {
   "testEnvironment": "node",
   "testMatch": [
-    "**/__tests__/e2e/**/*.test.js"
+    "**/__tests__/e2e/**/*.test.ts"
   ],
-  "globalSetup": "<rootDir>/__tests__/e2e/globalSetup.js",
-  "globalTeardown": "<rootDir>/__tests__/e2e/globalTeardown.js",
-  "setupFilesAfterEnv": ["<rootDir>/__tests__/e2e/setup.js"],
+  "modulePathIgnorePatterns": ["<rootDir>/.claude/"],
+  "globalSetup": "<rootDir>/__tests__/e2e/globalSetup.ts",
+  "globalTeardown": "<rootDir>/__tests__/e2e/globalTeardown.ts",
+  "setupFilesAfterEnv": ["<rootDir>/__tests__/e2e/setup.ts"],
   "transform": {
-    "^.+\\.js$": "babel-jest"
+    "^.+\\.ts$": "babel-jest"
   },
+  "moduleFileExtensions": ["ts", "js", "json"],
   "testTimeout": 30000,
   "forceExit": true
 }

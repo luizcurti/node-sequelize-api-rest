@@ -1,0 +1,26 @@
+erDiagram
+    USER {
+        int id PK
+        string name
+        string email UK
+        string password_hash
+    }
+
+    STUDENT {
+        int id PK
+        string name
+        string lastname
+        string email UK
+        int age
+        float weight
+        float height
+    }
+
+    PHOTO {
+        int id PK
+        string originalname
+        string filename
+        int student_id FK
+    }
+
+    STUDENT ||--o{ PHOTO : "has many"

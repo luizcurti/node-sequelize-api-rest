@@ -1,20 +1,22 @@
 {
   "testEnvironment": "node",
   "testMatch": [
-    "**/__tests__/unit/**/*.js",
-    "**/__tests__/setup.js"
+    "**/__tests__/unit/**/*.test.ts"
   ],
-  "setupFilesAfterEnv": ["<rootDir>/__tests__/setup.js"],
+  "modulePathIgnorePatterns": ["<rootDir>/.claude/"],
+  "setupFilesAfterEnv": ["<rootDir>/__tests__/setup.ts"],
   "transform": {
-    "^.+\\.js$": "babel-jest"
+    "^.+\\.ts$": "babel-jest"
   },
+  "moduleFileExtensions": ["ts", "js", "json"],
   "collectCoverageFrom": [
-    "src/**/*.js",
+    "src/**/*.ts",
     "!src/database/migrations/**",
     "!src/database/seeds/**",
-    "!src/config/appConfig.js",
-    "!src/server.js",
-    "!src/app.js",
-    "!src/routes/**"
+    "!src/config/appConfig.ts",
+    "!src/server.ts",
+    "!src/app.ts",
+    "!src/routes/**",
+    "!src/types/**"
   ]
 }

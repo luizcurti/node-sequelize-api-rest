@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant C as Client
+    participant M as loginRequired middleware
+    participant AS as AuthService
+    participant UR as UserRepository
+    participant Ctrl as Controller
+    participant Svc as Service
+
+    C->>M: request with Authorization: Bearer <token>
+    M->>AS: authenticate(authorizationHeader)
+
+    alt no Authorization header
+        AS-->>M: throws UnauthorizedError('Login required')
+    else header present
+        AS->>AS: jwt.verify(token, TOKEN_SECRET)
+        alt token invalid or expired
+            AS-->>M: throws UnauthorizedError('Expired or invalid token.')
+        else token valid
+            AS->>UR: findByIdAndEmail(id, email)
+            UR-->>AS: User | null
+            alt user no longer exists
+                AS-->>M: throws UnauthorizedError('Invalid User')
+            else user exists
+                AS-->>M: { userId, userEmail }
+                M->>M: req.userId = userId
+                M->>Ctrl: next()
+                Ctrl->>Svc: business logic call
+                Svc-->>Ctrl: result
+                Ctrl-->>C: 200 response
+            end
+        end
+    end
+
+    Note over M,C: Any thrown UnauthorizedError propagates to errorHandler,<br/>which responds 401 { errors: [...] }.

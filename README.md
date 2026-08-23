@@ -1,15 +1,23 @@
 # 🚀 REST API with Sequelize
 
-[![Unit Tests](https://img.shields.io/badge/unit%20tests-82%20passing-brightgreen)](https://github.com/luizcurti/node-sequelize-api-rest)
+[![CI/CD Pipeline](https://github.com/luizcurti/node-sequelize-api-rest/actions/workflows/ci.yml/badge.svg)](https://github.com/luizcurti/node-sequelize-api-rest/actions/workflows/ci.yml)
+[![Unit Tests](https://img.shields.io/badge/unit%20tests-62%20passing-brightgreen)](https://github.com/luizcurti/node-sequelize-api-rest)
 [![E2E Tests](https://img.shields.io/badge/e2e%20tests-47%20passing-brightgreen)](https://github.com/luizcurti/node-sequelize-api-rest)
-[![Node](https://img.shields.io/badge/node-v23.11.0-green)](https://nodejs.org/)
+[![Postman Collection](https://img.shields.io/badge/postman%20collection-31%20requests-brightgreen)](https://github.com/luizcurti/node-sequelize-api-rest)
+[![TypeScript](https://img.shields.io/badge/typescript-strict-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/license-ISC-blue)](LICENSE)
 
-Complete REST API built with Node.js, Express, and Sequelize ORM to manage users and students. Demonstrates RESTful API functionality with full CRUD operations, JWT authentication, file upload, comprehensive unit tests, and end-to-end integration tests running against a real MySQL database via Docker.
+A REST API built with **Node.js, TypeScript, Express and Sequelize** to manage users and
+students, following a small, pragmatic **layered / clean architecture**: routes →
+controllers → services → repository interfaces → Sequelize implementations. Includes JWT
+authentication, file upload, and three independent layers of testing (unit, end-to-end
+against a real MySQL database, and a Postman/Newman collection) — all covering both the
+happy path and the corresponding error paths.
 
 ## 📋 Table of Contents
 
 - [Technologies Used](#-technologies-used)
+- [Architecture](#-architecture)
 - [Features](#-features)
 - [Requirements](#-requirements)
 - [Installation](#-installation)
@@ -18,50 +26,78 @@ Complete REST API built with Node.js, Express, and Sequelize ORM to manage users
 - [Testing](#-testing)
 - [API Endpoints](#-api-endpoints)
 - [Project Structure](#-project-structure)
+- [Diagrams](#-diagrams)
 
 ## 🛠 Technologies Used
 
 ### Core
-- **Node.js v23.11.0** - JavaScript runtime
-- **Express v5.1.0** - Web framework
-- **Sequelize v6.37.7** - ORM for relational databases
-- **MySQL2 v3.14.0** - MySQL driver
+- **TypeScript** (strict mode) — compiled for dev/prod with [Sucrase](https://github.com/alangpierce/sucrase)
+- **Node.js** — JavaScript runtime
+- **Express 5** — web framework
+- **Sequelize 6** — ORM for relational databases
+- **MySQL2** — MySQL driver
 
 ### Security & Authentication
-- **JWT (jsonwebtoken v9.0.2)** - Token-based authentication
-- **Bcryptjs v3.0.2** - Password hashing
-- **Helmet v8.1.0** - HTTP security headers
-- **CORS** - Configurable allowed origins
+- **jsonwebtoken** — token-based authentication
+- **bcryptjs** — password hashing
+- **Helmet** — HTTP security headers
+- **CORS** — origin allow-list, sourced from `APP_URL`
 
 ### Upload & Files
-- **Multer v1.4.4** - Multipart file upload handling
-- **crypto.randomBytes** - Collision-safe filename generation
+- **Multer** — multipart file upload handling
+- **crypto.randomBytes** — collision-safe filename generation
 
 ### Configuration
-- **Dotenv v16.4.7** - Environment variable management
+- **dotenv** — environment variable management
 
 ### Testing & Quality
-- **Jest v29.7.0** - Testing framework
-- **Supertest v7.1.4** - HTTP integration testing
-- **ESLint v9.23.0** - Static code analysis
-- **Nodemon v3.1.9** - Hot reload in development
+- **Jest** + **Supertest** — unit and end-to-end HTTP testing
+- **Newman** — runs the Postman collection headlessly
+- **ESLint** (`typescript-eslint`) — static analysis
+- **Nodemon** — hot reload in development
+
+## 🏛 Architecture
+
+The codebase favors a small set of clear responsibilities over a heavier DDD structure —
+just enough layering to keep business logic testable and swappable from the ORM, without
+over-engineering a project this size:
+
+- **Routes** (`src/routes/`) wire URLs to controllers and apply `loginRequired` where a
+  route needs authentication.
+- **Controllers** (`src/controllers/`) are thin: parse the request, call a service, shape
+  the response. No business logic lives here.
+- **Services** (`src/services/`) hold the business rules (e.g. "a student must exist before
+  a photo can be attached to it") and depend only on repository **interfaces**, not on
+  Sequelize directly.
+- **Repositories** (`src/repositories/`) implement those interfaces on top of Sequelize
+  models — swapping persistence technology later would only mean writing a new
+  implementation, not touching services or controllers.
+- **`container.ts`** wires concrete repositories into services once, at startup — a plain
+  factory instead of a DI framework, which would be more machinery than this project needs.
+- **Errors** (`src/errors/`) are a small typed hierarchy (`AppError` →
+  `NotFoundError` / `UnauthorizedError` / `ValidationAppError`) caught by a single
+  `errorHandler` middleware, so every failure — including raw Sequelize validation errors —
+  turns into a consistent `{ errors: string[] }` response.
+
+See [Diagrams](#-diagrams) below for a visual walkthrough.
 
 ## ✨ Features
 
-- ✅ **User Management** - Full CRUD with password hashing (bcrypt)
-- ✅ **Student Management** - Full CRUD with field validations
-- ✅ **JWT Authentication** - Secure login with configurable token expiration
-- ✅ **Authorization Middleware** - Protected routes via `loginRequired`
-- ✅ **Photo Upload** - Upload and associate images with students
-- ✅ **Input Validation** - Sequelize-level validation on all models
-- ✅ **CORS Configured** - Whitelist-based origin control
-- ✅ **HTTP Security Headers** - Helmet integration
-- ✅ **82 Unit Tests** - Controllers, models, middleware fully covered
-- ✅ **47 E2E Tests** - All routes tested against a real MySQL database (Docker)
+- ✅ **User Management** — full CRUD with password hashing (bcrypt)
+- ✅ **Student Management** — full CRUD with field validations
+- ✅ **JWT Authentication** — secure login with configurable token expiration
+- ✅ **Authorization Middleware** — protected routes via `loginRequired`
+- ✅ **Photo Upload** — upload and associate images with students
+- ✅ **Input Validation** — Sequelize-level validation on all models
+- ✅ **CORS Configured** — allow-list driven by `APP_URL`
+- ✅ **HTTP Security Headers** — Helmet integration
+- ✅ **62 Unit Tests** — controllers, services, repositories, models and middleware, fully mocked
+- ✅ **47 E2E Tests** — every route tested against a real MySQL database (Docker)
+- ✅ **31-request Postman Collection** — happy + sad paths for every route, runnable via Newman
 
 ## 📦 Requirements
 
-- **Node.js** v23.11.0 or higher
+- **Node.js** 20+ (CI runs on 20.x)
 - **Docker** (for MySQL via Docker Compose — recommended)
 - **npm**
 
@@ -90,7 +126,11 @@ Or configure your own MySQL instance and set the credentials in `.env`.
 
 ### 4. Configure environment variables
 
-Create a `.env` file in the project root:
+Copy `.env.example` to `.env` and adjust as needed:
+
+```bash
+cp .env.example .env
+```
 
 ```env
 # Database
@@ -105,9 +145,11 @@ APP_URL=http://localhost:3000
 APP_PORT=3000
 
 # JWT
-TOKEN_SECRET=your_super_secret_key_here
+TOKEN_SECRET=replace_with_a_long_random_secret
 TOKEN_EXPIRATION=7d
 ```
+
+`.env` is git-ignored — never commit real secrets.
 
 ### 5. Run migrations
 
@@ -158,30 +200,36 @@ services:
 ## 📜 Available Scripts
 
 ```bash
-npm run dev           # Start in development mode with nodemon
-npm start             # Start in production mode
-npm test              # Run unit tests (82 tests, no DB required)
-npm run test:watch    # Run unit tests in watch mode
-npm run test:coverage # Run unit tests with coverage report
-npm run test:e2e      # Run E2E tests (requires Docker MySQL running)
-npm run build         # Compile project with Sucrase
-npm run lint          # Analyse code with ESLint
-npm run lint:fix      # Auto-fix ESLint issues
+npm run dev             # Start in development mode with nodemon (runs .ts directly)
+npm start               # Start in production mode (runs compiled dist/)
+npm run build           # Compile TypeScript with Sucrase into dist/
+npm run typecheck       # Type-check the project with tsc (no emit)
+npm run lint             # Analyse code with ESLint
+npm run lint:fix         # Auto-fix ESLint issues
+npm test                 # Run unit tests (no database required)
+npm run test:watch       # Run unit tests in watch mode
+npm run test:coverage    # Run unit tests with coverage report
+npm run test:e2e         # Run E2E tests (requires Docker MySQL running)
+npm run test:collection  # Run the Postman collection via Newman (requires the app running)
+npm run docs:diagrams    # Render docs/mmd/*.mmd Mermaid sources into docs/img/*.png
 ```
 
 ## 🧪 Testing
 
-The project has two separate test suites:
+The project has three independent layers of testing, each covering happy paths and the
+corresponding error paths (validation errors, missing auth, not found):
 
-### Unit Tests (82 tests — no database required)
+### 1. Unit Tests (62 tests — no database required)
 
 ```bash
 npm test
 ```
 
-Tests controllers, models, and middleware in isolation using Jest mocks.
+Controllers, services, repositories, models and middleware tested in isolation with Jest
+mocks — services are tested against mocked repository interfaces, so business rules are
+verified independently of Sequelize.
 
-### E2E Tests (47 tests — requires Docker MySQL)
+### 2. E2E Tests (47 tests — requires Docker MySQL)
 
 ```bash
 # Start MySQL first
@@ -191,39 +239,31 @@ docker compose up -d
 npm run test:e2e
 ```
 
-End-to-end tests cover every route, validating real HTTP request/response cycles including authentication, validation errors, 404 responses, file upload, and cascading delete behaviour.
+End-to-end tests cover every route, validating real HTTP request/response cycles including
+authentication, validation errors, 404 responses, file upload, and cascading delete
+behaviour. `__tests__/e2e/globalSetup.ts` waits for MySQL to accept connections (works
+identically against a local `docker compose` container or a CI service container) and runs
+migrations before the suite starts; `globalTeardown.ts` truncates the tables afterwards.
 
-### Test Structure
+### 3. Postman Collection (31 requests, 86 assertions — requires the app running)
 
+```bash
+# Start MySQL, then the app
+docker compose up -d
+npm run build && npm start
+
+# In another terminal
+npm run test:collection
 ```
-__tests__/
-├── setup.js                    # Unit test global configuration
-├── unit/                       # Unit tests (mocked dependencies)
-│   ├── config/
-│   │   └── multerConfig.test.js
-│   ├── controllers/
-│   │   ├── HomeController.test.js
-│   │   ├── PhotoController.test.js
-│   │   ├── StudentController.test.js
-│   │   ├── TokenController.test.js
-│   │   └── UserController.test.js
-│   ├── middlewares/
-│   │   └── loginRequired.test.js
-│   └── models/
-│       ├── Photo.test.js
-│       ├── Student.test.js
-│       └── User.test.js
-└── e2e/                        # End-to-end tests (real MySQL via Docker)
-    ├── globalSetup.js          # Waits for DB + runs migrations
-    ├── globalTeardown.js       # Cleans DB after all tests
-    ├── setup.js                # E2E-specific Jest config
-    ├── helpers.js              # Shared test utilities
-    ├── home.test.js            # GET /
-    ├── token.test.js           # POST /tokens/
-    ├── user.test.js            # CRUD /user/
-    ├── student.test.js         # CRUD /students/
-    └── photo.test.js           # POST /photos/
-```
+
+`postman.json` exercises every route end-to-end through real HTTP calls (as opposed to
+Supertest's in-process requests), chaining state through collection variables (`token`,
+`userId`, `studentId`, ...) so it runs unattended from a clean database. It can also be
+opened directly in Postman/Insomnia for manual exploration — see
+[Testing Tools](#-testing-tools) below.
+
+All three layers run automatically in CI on every push and pull request — see
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ## 📡 API Endpoints
 
@@ -298,6 +338,8 @@ Content-Type: application/json
   "name": "John Doe Updated"
 }
 ```
+
+Updates the account tied to the bearer token — there's no `:id` in the path.
 
 #### Delete user (requires authentication)
 ```http
@@ -443,59 +485,62 @@ No authentication required:
 
 ```
 node-sequelize-api-rest/
-├── __tests__/              # Unit and E2E tests
-│   ├── e2e/               # End-to-end integration tests
-│   ├── unit/              # Unit tests (mocked)
-│   └── setup.js           # Unit test configuration
-├── db/                    # MySQL data (Docker volume)
+├── __tests__/
+│   ├── e2e/                     # End-to-end tests (real MySQL via Docker)
+│   ├── unit/                    # Unit tests (mocked dependencies)
+│   ├── fixtures/                # Shared test fixtures (e.g. test.png)
+│   └── setup.ts                 # Unit test global configuration
+├── docs/
+│   ├── mmd/                     # Mermaid diagram sources
+│   └── img/                     # Rendered diagram PNGs
+├── db/                          # MySQL data (Docker volume, git-ignored)
 ├── src/
-│   ├── config/
-│   │   ├── appConfig.js   # App URL config
-│   │   ├── database.cjs   # Sequelize config (migrations)
-│   │   ├── database.js    # Sequelize config (app)
-│   │   └── multerConfig.js
-│   ├── controllers/
-│   │   ├── HomeController.js
-│   │   ├── PhotoController.js
-│   │   ├── StudentController.js
-│   │   ├── TokenController.js
-│   │   └── UserController.js
-│   ├── database/
-│   │   ├── migrations/
-│   │   ├── seeds/
-│   │   └── index.js
-│   ├── middlewares/
-│   │   └── loginRequired.js
-│   ├── models/
-│   │   ├── Photo.js
-│   │   ├── Student.js
-│   │   └── User.js
-│   ├── routes/
-│   │   ├── homeRoutes.js
-│   │   ├── photoRoutes.js
-│   │   ├── studentRoutes.js
-│   │   ├── tokenRoutes.js
-│   │   └── userRoutes.js
-│   ├── app.js
-│   └── server.js
-├── uploads/
-│   └── images/
-├── .env
-├── babel.config.json
+│   ├── config/                  # appConfig, database (Sequelize connection + CLI config)
+│   ├── container.ts             # DI wiring: repositories -> services
+│   ├── controllers/             # Thin HTTP controllers
+│   ├── database/                # Sequelize bootstrap, migrations, seeds
+│   ├── errors/                  # AppError hierarchy
+│   ├── middlewares/              # loginRequired, errorHandler
+│   ├── models/                  # Sequelize models (User, Student, Photo)
+│   ├── repositories/            # Repository interfaces + Sequelize implementations
+│   ├── routes/                  # Express routers
+│   ├── services/                # Business logic (UserService, StudentService, ...)
+│   ├── types/                   # Ambient type declarations
+│   ├── app.ts
+│   └── server.ts
+├── scripts/                     # render-diagrams.mjs, write-dist-package-json.mjs
+├── uploads/images/               # Uploaded photos (git-ignored, kept via .gitkeep)
+├── .env.example
 ├── docker-compose.yml
-├── eslint.config.js
-├── jest.config.json       # Unit test config
-├── jest.e2e.config.json   # E2E test config
-├── nodemon.json
-├── postman.json           # Postman collection (all routes)
+├── postman.json                 # Postman collection (happy + sad paths)
+├── postman.environment.json     # Default Postman environment (baseUrl)
 └── package.json
 ```
 
 ---
 
+## 🖼 Diagrams
+
+Architecture and request-flow diagrams live as Mermaid sources in [`docs/mmd/`](docs/mmd)
+and are rendered to PNG in [`docs/img/`](docs/img) via `npm run docs:diagrams`:
+
+- [`architecture.png`](docs/img/architecture.png) — layered view: routes → controllers →
+  services → repository interfaces → Sequelize repositories → models → MySQL, plus the DI
+  container and the error-handling cross-cut.
+- [`er-diagram.png`](docs/img/er-diagram.png) — entity-relationship diagram for
+  `User`, `Student` and `Photo`.
+- [`sequence-login.png`](docs/img/sequence-login.png) — `POST /tokens/` login flow.
+- [`sequence-protected-request.png`](docs/img/sequence-protected-request.png) — how
+  `loginRequired` validates a JWT before a protected route runs.
+- [`sequence-photo-upload.png`](docs/img/sequence-photo-upload.png) — `POST /photos/`
+  upload flow, including the student-existence check.
+
+---
+
 ## 🧰 Testing Tools
 
-You can use the included Postman collection (`postman.json`) to manually test all routes, or any HTTP client:
+You can use the included Postman collection (`postman.json` + `postman.environment.json`)
+to explore or manually test all routes, or any HTTP client:
 
 - **Postman** - [Download](https://www.postman.com/downloads/)
 - **Insomnia** - [Download](https://insomnia.rest/download)

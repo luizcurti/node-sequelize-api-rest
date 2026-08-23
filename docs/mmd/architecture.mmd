@@ -1,0 +1,43 @@
+flowchart TB
+    Client(["Client<br/>Browser / Postman / curl"])
+
+    subgraph HTTP["HTTP layer"]
+        Routes["Routes<br/>src/routes/*"]
+        Middlewares["Middlewares<br/>loginRequired, errorHandler"]
+    end
+
+    subgraph App["Application layer"]
+        Controllers["Controllers<br/>HomeController, UserController,\nStudentController, TokenController,\nPhotoController"]
+        Services["Services<br/>UserService, StudentService,\nPhotoService, AuthService"]
+    end
+
+    subgraph Domain["Persistence layer"]
+        RepoInterfaces["Repository interfaces\nsrc/repositories/interfaces/*"]
+        RepoImpl["Sequelize repositories\nSequelizeUserRepository,\nSequelizeStudentRepository,\nSequelizePhotoRepository"]
+        Models["Sequelize models\nUser, Student, Photo"]
+    end
+
+    Container[["container.ts\n(DI wiring)"]]
+    DB[("MySQL")]
+    Errors["Error hierarchy\nAppError -> NotFoundError,\nUnauthorizedError, ValidationAppError"]
+
+    Client --> Routes
+    Routes --> Middlewares
+    Middlewares --> Controllers
+    Controllers --> Services
+    Services --> RepoInterfaces
+    RepoInterfaces -.implemented by.-> RepoImpl
+    RepoImpl --> Models
+    Models --> DB
+
+    Container -. constructs & injects .-> Services
+    Container -. constructs & injects .-> RepoImpl
+
+    Services -. throws .-> Errors
+    Errors -. caught by .-> Middlewares
+    Middlewares --> Client
+
+    style Client fill:#eef,stroke:#446
+    style DB fill:#efe,stroke:#464
+    style Container fill:#ffe,stroke:#663
+    style Errors fill:#fee,stroke:#644

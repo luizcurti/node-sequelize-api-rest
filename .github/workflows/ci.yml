@@ -68,11 +68,41 @@ jobs:
       - name: Run migrations
         run: npx sequelize-cli db:migrate --config src/config/database.cjs
 
+      - name: Run typecheck
+        run: npm run typecheck
+
       - name: Run linter
         run: npm run lint
 
-      - name: Run tests with coverage
+      - name: Run unit tests with coverage
         run: npm run test:coverage
+
+      - name: Run e2e tests
+        run: npm run test:e2e
+
+      - name: Build the app
+        run: npm run build
+
+      - name: Start the app in the background
+        run: nohup npm start > server.log 2>&1 &
+
+      - name: Wait for the app to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -sf "$APP_URL/" > /dev/null; then
+              echo "App is up!"
+              break
+            fi
+            echo "Waiting for the app..."
+            sleep 1
+          done
+
+      - name: Run Postman collection (Newman)
+        run: npx newman run postman.json -e postman.environment.json --env-var baseUrl="$APP_URL"
+
+      - name: Show server logs
+        if: always()
+        run: cat server.log || true
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4

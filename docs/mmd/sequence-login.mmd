@@ -1,0 +1,35 @@
+sequenceDiagram
+    participant C as Client
+    participant R as tokenRoutes
+    participant TC as TokenController
+    participant AS as AuthService
+    participant UR as UserRepository
+    participant DB as MySQL
+
+    C->>R: POST /tokens/ { email, password }
+    R->>TC: store(req, res)
+    TC->>AS: login(email, password)
+
+    alt email or password missing
+        AS-->>TC: throws UnauthorizedError(401)
+    else credentials provided
+        AS->>UR: findByEmail(email)
+        UR->>DB: SELECT * FROM users WHERE email = ?
+        DB-->>UR: user row (or null)
+        UR-->>AS: User | null
+
+        alt user not found
+            AS-->>TC: throws UnauthorizedError(401)
+        else user found
+            AS->>AS: user.passwordIsValid(password)
+            alt password invalid
+                AS-->>TC: throws UnauthorizedError(401)
+            else password valid
+                AS->>AS: jwt.sign({ id, email }, TOKEN_SECRET)
+                AS-->>TC: { token, user }
+                TC-->>C: 200 { token, user }
+            end
+        end
+    end
+
+    Note over TC,C: On any thrown error, the errorHandler middleware<br/>turns it into { errors: [...] } with the error's statusCode.
