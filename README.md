@@ -7,12 +7,11 @@
 [![TypeScript](https://img.shields.io/badge/typescript-strict-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/license-ISC-blue)](LICENSE)
 
-A REST API built with **Node.js, TypeScript, Express and Sequelize** to manage users and
-students, following a small, pragmatic **layered / clean architecture**: routes →
-controllers → services → repository interfaces → Sequelize implementations. Includes JWT
-authentication, file upload, and three independent layers of testing (unit, end-to-end
-against a real MySQL database, and a Postman/Newman collection) — all covering both the
-happy path and the corresponding error paths.
+Multipart file upload (Multer, collision-safe filenames via `crypto.randomBytes`) on a
+Sequelize/MySQL REST API, tested three independent ways — unit, end-to-end against a real
+MySQL database, and a Postman/Newman collection — covering both the happy path and the
+corresponding error paths. Layered / clean architecture: routes → controllers → services →
+repository interfaces → Sequelize implementations, with JWT authentication.
 
 ## 📋 Table of Contents
 
