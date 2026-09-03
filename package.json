@@ -16,7 +16,8 @@
     "lint": "eslint src/ __tests__/",
     "lint:fix": "eslint src/ __tests__/ --fix",
     "docs:diagrams": "node scripts/render-diagrams.mjs",
-    "test:collection": "newman run postman.json -e postman.environment.json"
+    "test:collection": "newman run postman.json -e postman.environment.json",
+    "postinstall": "patch-package"
   },
   "keywords": [],
   "author": "",
@@ -40,11 +41,15 @@
     "jest": "^30.4.2",
     "newman": "^6.2.2",
     "nodemon": "^3.1.14",
+    "patch-package": "^8.0.1",
     "sequelize-cli": "^6.6.5",
     "sucrase": "^3.35.1",
     "supertest": "^7.2.2",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.67.0"
+  },
+  "overrides": {
+    "@faker-js/faker": "^10.6.0"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
